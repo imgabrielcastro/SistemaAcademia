@@ -23,12 +23,7 @@ export default function NavegacaoCard({ card }: { card: CardNavegacaoInicio }) {
         },
       }}
     >
-      <Link
-        href={card.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        underline="none"
-      >
+      <Link href={card.link} underline="none">
         <CardContent>
           {card.icon === "calendar" ? <CalendarTodayIcon /> : <PeopleIcon />}
           <Typography variant="h5" component="div" fontWeight={"bold"}>
