@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, Avatar } from "@mui/material";
+import { AppBar, Box, Button, Toolbar, Avatar, Link } from "@mui/material";
 import LogoNf from "../../assets/nextfit-academia-logo.svg";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import PeopleIcon from "@mui/icons-material/People";
@@ -7,11 +7,13 @@ export default function Header() {
   return (
     <AppBar
       position="fixed"
-      sx={{ backgroundColor: "primary.main", opacity: 0.9, width: "100%" }}
+      sx={{ backgroundColor: "primary.main", opacity: 0.9, width: "100%", justifyContent: "center" }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Box>
-          <img src={LogoNf} alt="NextFit Academia" height="40" />
+          <Link href="/">
+            <img src={LogoNf} alt="NextFit Academia" height="40" style={{ cursor: "pointer" }} />
+          </Link>
         </Box>
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
           <Button
