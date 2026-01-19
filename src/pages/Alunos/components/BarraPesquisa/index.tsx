@@ -1,6 +1,11 @@
 import { Box, TextField } from "@mui/material";
 
-export default function BarraPesquisa() {
+interface BarraPesquisaProps {
+  searchAluno: string;
+  onSearchChange: (searchAluno: string) => void;
+}
+
+export default function BarraPesquisa({ searchAluno, onSearchChange }: BarraPesquisaProps) {
   return (
     <Box
       sx={{
@@ -17,8 +22,13 @@ export default function BarraPesquisa() {
         variant="outlined"
         size="small"
         fullWidth
-        onChange={(e) => console.log(e.target.value)}
+        value={searchAluno}
+        onChange={(e) => {
+          onSearchChange(e.target.value);
+        }}
       />
     </Box>
   );
 }
+
+export { BarraPesquisa };

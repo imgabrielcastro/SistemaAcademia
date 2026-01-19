@@ -50,6 +50,7 @@ export default function CadastroAluno({ open, setOpen }: CadastroAlunoProps) {
 
   <form onSubmit={handleSubmit((data) => {
     adicionarAluno({ ...data, id: Math.random().toString() } as any);
+    console.log(data);
     handleClose();
   })}>
     <DialogContent>
@@ -57,7 +58,6 @@ export default function CadastroAluno({ open, setOpen }: CadastroAlunoProps) {
         <TextField
           label="Nome"
           fullWidth
-          required
           {...register("nome")}
           error={!!errors.nome}
           helperText={errors.nome?.message}
@@ -76,7 +76,7 @@ export default function CadastroAluno({ open, setOpen }: CadastroAlunoProps) {
               fullWidth
               error={!!errors.cpf}
               helperText={errors.cpf?.message}
-              onValueChange={(values) => field.onChange(values.formattedValue)}
+              onChange={(e) => field.onChange(e.target.value.replace(/\D/g, ''))}
             />
           )}
         />

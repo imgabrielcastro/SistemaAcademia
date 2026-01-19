@@ -20,9 +20,10 @@ export default function Header() {
           <Button
             component={Link}
             to="/agenda"
-            variant="contained"
+            variant="text"
+            size="large"
             color="secondary"
-            sx={{ color: "primary.main" }}
+            sx={{ color: "secondary.main", fontWeight: "bold" }}
             startIcon={<DateRangeIcon />}
           >
             Agenda
@@ -30,9 +31,10 @@ export default function Header() {
           <Button
             component={Link}
             to="/alunos"
-            variant="contained"
+            variant="text"
+            size="large"
             color="secondary"
-            sx={{ color: "primary.main" }}
+            sx={{ color: "primary.secondary", fontWeight: "bold" }}
             startIcon={<PeopleIcon />}
           >
             Alunos

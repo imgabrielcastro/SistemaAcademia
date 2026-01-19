@@ -1,18 +1,27 @@
-import { Aluno } from "../../../../types/Aluno";
 import AlunoCard from "../AlunoCard";
-import { useEffect } from "react";
 import { useAlunos } from "../../../../hooks/useAlunos";
+import { useState } from "react";
+import BarraPesquisa from "../BarraPesquisa";
 
 export function ListaAlunos() {
   const { alunos } = useAlunos();
+  const [searchAluno, setSearchAluno] = useState<string>("");
 
-  useEffect(() => {
-    console.log("ListaAlunos");
-  }, []);
+  const alunosFiltrados = searchAluno
+    ? alunos.filter(
+        (aluno) =>
+          aluno.nome.toLowerCase().includes(searchAluno.toLowerCase()) ||
+          (aluno.cpf && aluno.cpf.includes(searchAluno)) ,
+      )
+    : alunos;
 
   return (
     <div>
-      {alunos.map((aluno: Aluno) => (
+      <BarraPesquisa
+        searchAluno={searchAluno}
+        onSearchChange={setSearchAluno}
+      />
+      {alunosFiltrados.map((aluno) => (
         <AlunoCard key={aluno.id} aluno={aluno} />
       ))}
     </div>

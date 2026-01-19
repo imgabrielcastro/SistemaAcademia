@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import Header from "../../components/Header";
 import TituloDescricaoBotao from "../../components/TituloDescricaoBotao";
-import BarraPesquisa from "./components/BarraPesquisa";
 import CadastroAluno from "./components/CadastroAluno";
 import { useState } from "react";
 import { ListaAlunos } from "./components/ListaAlunos";
@@ -34,8 +33,6 @@ export default function Alunos() {
           open={open}
           setOpen={setOpen}
         />
-
-        <BarraPesquisa />
 
         <ListaAlunos />
       </Box>

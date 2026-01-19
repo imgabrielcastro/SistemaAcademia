@@ -36,6 +36,7 @@ export default function TituloDescricaoBotao({ titulo, descricao, buttonText, on
         sx={{
           whiteSpace: "nowrap",
           width: { xs: "100%", sm: "auto" },
+          fontWeight: "bold",
         }}
         onClick={onButtonClick}
       >

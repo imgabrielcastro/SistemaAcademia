@@ -29,7 +29,7 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
           {aluno.nome}
         </Typography>
         <HStack gap={2} alignItems="center" color={"text.secondary"}>
-          <Typography>{aluno.cpf || "CPF não informado"}</Typography>
+          <Typography>{aluno.cpf ? aluno.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : "CPF não informado"}</Typography>
           <Typography
             variant="body2"
             sx={{
