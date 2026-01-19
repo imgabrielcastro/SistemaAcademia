@@ -15,7 +15,9 @@ export default function BarraPesquisa() {
         sx={{ borderColor: "primary.main" }}
         label="Buscar por nome ou CPF..."
         variant="outlined"
+        size="small"
         fullWidth
+        onChange={(e) => console.log(e.target.value)}
       />
     </Box>
   );

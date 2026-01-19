@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Inicio from "./pages/Inicio";
 import Alunos from "./pages/Alunos";
 import Agenda from "./pages/Agenda";
+import AlunosProvider from "./contexts/AlunosContext";
 
 function App() {
   return (
@@ -11,11 +12,13 @@ function App() {
       <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <Header />
         <Box component="main" sx={{ mt: 8, flexGrow: 1 }}>
-          <Routes>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/alunos" element={<Alunos />} />
-            <Route path="/agenda" element={<Agenda />} />
-          </Routes>
+          <AlunosProvider>
+            <Routes>
+              <Route path="/" element={<Inicio />} />
+              <Route path="/alunos" element={<Alunos />} />
+              <Route path="/agenda" element={<Agenda />} />
+            </Routes>
+          </AlunosProvider>
         </Box>
       </Box>
     </Router>

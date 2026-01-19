@@ -29,13 +29,16 @@ export default function Alunos() {
           }}
         />
 
-        <CadastroAluno open={open} setOpen={setOpen} />
+        <CadastroAluno
+          key={open ? "aberto" : "fechado"}
+          open={open}
+          setOpen={setOpen}
+        />
 
         <BarraPesquisa />
-        
+
         <ListaAlunos />
       </Box>
     </Box>
   );
 }
-
