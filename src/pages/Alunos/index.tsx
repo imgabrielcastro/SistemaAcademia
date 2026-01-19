@@ -33,6 +33,7 @@ export default function Alunos() {
         />
 
         <CadastroAluno
+          key={alunoSelecionado?.id ?? "novo"}
           open={open}
           setOpen={setOpen}
           aluno={alunoSelecionado}
