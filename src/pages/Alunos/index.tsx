@@ -2,9 +2,12 @@ import { Box } from "@mui/material";
 import Header from "../../components/Header";
 import TituloDescricaoBotao from "../../components/TituloDescricaoBotao";
 import BarraPesquisa from "./components/BarraPesquisa";
-import Aluno from "./components/Aluno";
+import CadastroAluno from "./components/CadastroAluno";
+import { useState } from "react";
+import { ListaAlunos } from "./components/ListaAlunos";
 
 export default function Alunos() {
+  const [open, setOpen] = useState(false);
   return (
     <Box
       sx={{
@@ -20,57 +23,19 @@ export default function Alunos() {
           titulo="Alunos"
           descricao="2 alunos cadastrados"
           buttonText="Novo Aluno"
+          onButtonClick={() => {
+            setOpen(true);
+            console.log("modal aberto");
+          }}
         />
+
+        <CadastroAluno open={open} setOpen={setOpen} />
+
         <BarraPesquisa />
-        <Aluno
-          aluno={{
-            id: "1",
-            nome: "Gabriel Castro",
-            cpf: "123.456.789-00",
-            tipoContrato: "Mensal",
-          }}
-        />
-        <Aluno
-          aluno={{
-            id: "1",
-            nome: "João Silva",
-            cpf: "123.456.789-00",
-            tipoContrato: "Mensal",
-          }}
-        />
-        <Aluno
-          aluno={{
-            id: "1",
-            nome: "Saymon Espindola",
-            cpf: "123.456.789-00",
-            tipoContrato: "Anual",
-          }}
-        />
-        <Aluno
-          aluno={{
-            id: "1",
-            nome: "Maria Santos",
-            cpf: "123.456.789-00",
-            tipoContrato: "Semestral",
-          }}
-        />
-        <Aluno
-          aluno={{
-            id: "1",
-            nome: "Pedro Alves",
-            cpf: "123.456.789-00",
-            tipoContrato: "Semestral",
-          }}
-        />
-        <Aluno
-          aluno={{
-            id: "1",
-            nome: "Ana Paula",
-            cpf: "123.456.789-00",
-            tipoContrato: "Trimestral",
-          }}
-        />
+        
+        <ListaAlunos />
       </Box>
     </Box>
   );
 }
+

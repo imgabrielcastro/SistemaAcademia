@@ -12,6 +12,7 @@ export default function BarraPesquisa() {
       }}
     >
       <TextField
+        sx={{ borderColor: "primary.main" }}
         label="Buscar por nome ou CPF..."
         variant="outlined"
         fullWidth

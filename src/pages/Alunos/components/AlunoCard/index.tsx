@@ -6,7 +6,6 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
   const tipoContratoToColor: Record<Aluno["tipoContrato"], string> = {
     Mensal: "#4caf50",
     Trimestral: "#ff9800",
-    Semestral: "#2196f3",
     Anual: "#f44336",
   };
 
@@ -19,6 +18,10 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
         mt: 2,
         borderRadius: 3,
         boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        cursor: "pointer",
+        "&:hover": {
+          borderColor: "primary.main",
+        },
       }}
     >
       <Box>
@@ -26,7 +29,7 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
           {aluno.nome}
         </Typography>
         <HStack gap={2} alignItems="center" color={"text.secondary"}>
-          <Typography>{aluno.cpf}</Typography>
+          <Typography>{aluno.cpf || "CPF não informado"}</Typography>
           <Typography
             variant="body2"
             sx={{

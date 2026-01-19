@@ -8,11 +8,12 @@ type TituloDescricaoBotaoProps = {
   titulo: string;
   descricao: string;
   buttonText: string;
+  onButtonClick?: () => void;
 };
 
 
 
-export default function TituloDescricaoBotao({ titulo, descricao, buttonText }: TituloDescricaoBotaoProps) {
+export default function TituloDescricaoBotao({ titulo, descricao, buttonText, onButtonClick}: TituloDescricaoBotaoProps) {
   return (
     <HStack
       justifyContent="space-between"
@@ -36,6 +37,7 @@ export default function TituloDescricaoBotao({ titulo, descricao, buttonText }: 
           whiteSpace: "nowrap",
           width: { xs: "100%", sm: "auto" },
         }}
+        onClick={onButtonClick}
       >
         {buttonText}
       </Button>
