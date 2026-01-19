@@ -23,7 +23,11 @@ type CadastroAlunoProps = {
   aluno?: Aluno | null;
 };
 
-export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoProps) {
+export default function CadastroAluno({
+  open,
+  setOpen,
+  aluno,
+}: CadastroAlunoProps) {
   const contratos = tiposContrato;
   const { adicionarAluno, atualizarAluno, removerAluno } = useAlunos();
 
@@ -62,14 +66,34 @@ export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoPro
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle fontWeight={600}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 3,
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          pb: 1,
+          fontWeight: 600,
+        }}
+      >
         {aluno ? "Editar Aluno" : "Cadastrar Aluno"}
+        <div style={{ fontSize: 14, fontWeight: 400, opacity: 0.7 }}>
+          {aluno
+            ? "Atualize as informações do aluno"
+            : "Preencha os dados abaixo para cadastrar um novo aluno"}
+        </div>
       </DialogTitle>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent dividers>
-          <Stack spacing={2}>
+          <Stack spacing={2.2}>
             <TextField
               label="Nome completo"
               fullWidth
@@ -88,6 +112,8 @@ export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoPro
                   customInput={TextField}
                   label="CPF"
                   fullWidth
+                  error={!!errors.cpf}
+                  helperText={errors.cpf?.message}
                   onChange={(e) =>
                     field.onChange(e.target.value.replace(/\D/g, ""))
                   }
@@ -101,10 +127,15 @@ export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoPro
               fullWidth
               InputLabelProps={{ shrink: true }}
               {...register("dataNascimento")}
+              error={!!errors.dataNascimento}
+              helperText={errors.dataNascimento?.message}
             />
 
-            <TextField label="Cidade" fullWidth {...register("cidade")} />
-            <TextField label="Bairro" fullWidth {...register("bairro")} />
+            <Stack direction="row" spacing={2}>
+              <TextField label="Cidade" fullWidth {...register("cidade")} />
+              <TextField label="Bairro" fullWidth {...register("bairro")} />
+            </Stack>
+
             <TextField label="Endereço" fullWidth {...register("endereco")} />
 
             <Controller
@@ -116,7 +147,12 @@ export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoPro
                   value={field.value || null}
                   onChange={(_, value) => field.onChange(value)}
                   renderInput={(params) => (
-                    <TextField {...params} label="Tipo de contrato" />
+                    <TextField
+                      {...params}
+                      label="Tipo de contrato"
+                      error={!!errors.tipoContrato}
+                      helperText={errors.tipoContrato?.message}
+                    />
                   )}
                 />
               )}
@@ -124,8 +160,15 @@ export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoPro
           </Stack>
         </DialogContent>
 
-        <DialogActions sx={{ px: 3, py: 2 }}>
-          {aluno && (
+        <DialogActions
+          sx={{
+            px: 3,
+            py: 2,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          {aluno ? (
             <Button
               color="error"
               variant="outlined"
@@ -134,15 +177,20 @@ export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoPro
                 handleClose();
               }}
             >
-              Remover
+              Remover aluno
             </Button>
+          ) : (
+            <span />
           )}
 
-          <Button onClick={handleClose}>Cancelar</Button>
-
-          <Button type="submit" variant="contained">
-            {aluno ? "Salvar alterações" : "Cadastrar"}
-          </Button>
+          <Stack direction="row" spacing={1.5}>
+            <Button onClick={handleClose} variant="text">
+              Cancelar
+            </Button>
+            <Button type="submit" variant="contained" size="large">
+              {aluno ? "Salvar alterações" : "Cadastrar aluno"}
+            </Button>
+          </Stack>
         </DialogActions>
       </form>
     </Dialog>
