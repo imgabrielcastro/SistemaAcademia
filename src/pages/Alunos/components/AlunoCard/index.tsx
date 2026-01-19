@@ -4,9 +4,9 @@ import { Aluno } from "../../../../types/Aluno";
 
 export default function AlunoCard({ aluno }: { aluno: Aluno }) {
   const tipoContratoToColor: Record<Aluno["tipoContrato"], string> = {
-    Mensal: "#4caf50",
-    Trimestral: "#ff9800",
-    Anual: "#f44336",
+    Mensal: "#e8f5e9",
+    Trimestral: "#FFF3E0",
+    Anual: "#FFEBEE",
   };
 
   return (
@@ -34,10 +34,20 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
             variant="body2"
             sx={{
               bgcolor: tipoContratoToColor[aluno.tipoContrato],
-              color: "white",
+              color: () => {
+                const colorMap = {
+                  Mensal: "#44a148", 
+                  Trimestral: "#EF6C02", 
+                  Anual: "#EC5E59",
+                };
+                return colorMap[aluno.tipoContrato] || "#424242";
+              },
+              fontWeight: "bold",
               px: 1,
               py: 0.5,
-              borderRadius: 1,
+              borderRadius: 4,
+              textAlign: "center",
+              minWidth: 70,
             }}
           >
             {aluno.tipoContrato}
