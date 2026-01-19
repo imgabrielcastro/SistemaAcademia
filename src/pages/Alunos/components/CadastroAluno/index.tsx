@@ -14,115 +14,137 @@ import { useForm, Controller } from "react-hook-form";
 import { cadastroAlunoSchema } from "../../../../schema";
 import { PatternFormat } from "react-number-format";
 import { useAlunos } from "../../../../hooks/useAlunos";
-
-import { tiposContrato } from "../../../../types/Aluno";
+import { tiposContrato, Aluno } from "../../../../types/Aluno";
+import { useEffect } from "react";
 
 type CadastroAlunoProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  aluno?: Aluno | null;
 };
 
-export default function CadastroAluno({ open, setOpen }: CadastroAlunoProps) {
+export default function CadastroAluno({ open, setOpen, aluno }: CadastroAlunoProps) {
   const contratos = tiposContrato;
-  const { adicionarAluno } = useAlunos();
+  const { adicionarAluno, atualizarAluno, removerAluno } = useAlunos();
 
-  type formularioDados = yup.InferType<typeof cadastroAlunoSchema>;
+  type FormData = yup.InferType<typeof cadastroAlunoSchema>;
+
   const {
     register,
     handleSubmit,
     reset,
     control,
     formState: { errors },
-  } = useForm<formularioDados>({
+  } = useForm<FormData>({
     resolver: yupResolver(cadastroAlunoSchema) as any,
-    mode: "onSubmit",
   });
 
+  useEffect(() => {
+    if (aluno) {
+      reset(aluno);
+    } else {
+      reset();
+    }
+  }, [aluno, reset]);
+
   const handleClose = () => {
-    console.log("reset");
     reset();
     setOpen(false);
   };
 
-  return (
- <Dialog open={open} maxWidth="sm" fullWidth onClose={handleClose} keepMounted={false}>
-  <DialogTitle>Cadastro de Aluno</DialogTitle>
-
-  <form onSubmit={handleSubmit((data) => {
-    adicionarAluno({ ...data, id: Math.random().toString() } as any);
-    console.log(data);
+  const onSubmit = (data: FormData) => {
+    if (aluno) {
+      atualizarAluno(aluno.id, data);
+    } else {
+      adicionarAluno({ ...data, id: crypto.randomUUID() } as Aluno);
+    }
     handleClose();
-  })}>
-    <DialogContent>
-      <Stack spacing={2} sx={{ pt: 2 }}>
-        <TextField
-          label="Nome"
-          fullWidth
-          {...register("nome")}
-          error={!!errors.nome}
-          helperText={errors.nome?.message}
-        />
+  };
 
-        <Controller
-          name="cpf"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <PatternFormat
-              {...field}
-              format="###.###.###-##"
-              customInput={TextField}
-              label="CPF"
+  return (
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle fontWeight={600}>
+        {aluno ? "Editar Aluno" : "Cadastrar Aluno"}
+      </DialogTitle>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent dividers>
+          <Stack spacing={2}>
+            <TextField
+              label="Nome completo"
               fullWidth
-              error={!!errors.cpf}
-              helperText={errors.cpf?.message}
-              onChange={(e) => field.onChange(e.target.value.replace(/\D/g, ''))}
+              {...register("nome")}
+              error={!!errors.nome}
+              helperText={errors.nome?.message}
             />
-          )}
-        />
 
-        <TextField
-          label="Data de Nascimento"
-          type="date"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          {...register("dataNascimento")}
-          error={!!errors.dataNascimento}
-          helperText={errors.dataNascimento?.message}
-        />
-
-        <TextField label="Cidade" fullWidth {...register("cidade")} />
-        <TextField label="Bairro" fullWidth {...register("bairro")} />
-        <TextField label="Endereço" fullWidth {...register("endereco")} />
-
-        <Controller
-          name="tipoContrato"
-          control={control}
-          defaultValue={"" as "Mensal" | "Trimestral" | "Anual" | undefined}
-          render={({ field }) => (
-            <Autocomplete
-              value={field.value || ""}
-              onChange={(_, value) => field.onChange(value)}
-              options={contratos}
-              renderInput={(params) => (
-                <TextField {...params} label="Tipo de Contrato" error={!!errors.tipoContrato} helperText={errors.tipoContrato?.message} />
+            <Controller
+              name="cpf"
+              control={control}
+              render={({ field }) => (
+                <PatternFormat
+                  {...field}
+                  format="###.###.###-##"
+                  customInput={TextField}
+                  label="CPF"
+                  fullWidth
+                  onChange={(e) =>
+                    field.onChange(e.target.value.replace(/\D/g, ""))
+                  }
+                />
               )}
             />
+
+            <TextField
+              type="date"
+              label="Data de nascimento"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              {...register("dataNascimento")}
+            />
+
+            <TextField label="Cidade" fullWidth {...register("cidade")} />
+            <TextField label="Bairro" fullWidth {...register("bairro")} />
+            <TextField label="Endereço" fullWidth {...register("endereco")} />
+
+            <Controller
+              name="tipoContrato"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete
+                  options={contratos}
+                  value={field.value || null}
+                  onChange={(_, value) => field.onChange(value)}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Tipo de contrato" />
+                  )}
+                />
+              )}
+            />
+          </Stack>
+        </DialogContent>
+
+        <DialogActions sx={{ px: 3, py: 2 }}>
+          {aluno && (
+            <Button
+              color="error"
+              variant="outlined"
+              onClick={() => {
+                removerAluno(aluno.id);
+                handleClose();
+              }}
+            >
+              Remover
+            </Button>
           )}
-        />
-      </Stack>
-    </DialogContent>
 
-    <DialogActions>
-      <Button type="button" onClick={handleClose} size="large" variant="outlined">
-        Cancelar
-      </Button>
-      <Button type="submit" variant="contained" size="large">
-        Salvar
-      </Button>
-    </DialogActions>
-  </form>
-</Dialog>
+          <Button onClick={handleClose}>Cancelar</Button>
 
+          <Button type="submit" variant="contained">
+            {aluno ? "Salvar alterações" : "Cadastrar"}
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }

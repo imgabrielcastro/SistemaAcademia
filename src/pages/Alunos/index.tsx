@@ -4,9 +4,12 @@ import TituloDescricaoBotao from "../../components/TituloDescricaoBotao";
 import CadastroAluno from "./components/CadastroAluno";
 import { useState } from "react";
 import { ListaAlunos } from "./components/ListaAlunos";
+import { Aluno } from "../../types/Aluno";
 
 export default function Alunos() {
   const [open, setOpen] = useState(false);
+  const [alunoSelecionado, setAlunoSelecionado] = useState<Aluno | null>(null);
+
   return (
     <Box
       sx={{
@@ -17,24 +20,30 @@ export default function Alunos() {
       }}
     >
       <Header />
+
       <Box>
         <TituloDescricaoBotao
           titulo="Alunos"
           descricao="2 alunos cadastrados"
           buttonText="Novo Aluno"
           onButtonClick={() => {
+            setAlunoSelecionado(null);
             setOpen(true);
-            console.log("modal aberto");
           }}
         />
 
         <CadastroAluno
-          key={open ? "aberto" : "fechado"}
           open={open}
           setOpen={setOpen}
+          aluno={alunoSelecionado}
         />
 
-        <ListaAlunos />
+        <ListaAlunos
+          onSelectAluno={(aluno) => {
+            setAlunoSelecionado(aluno);
+            setOpen(true);
+          }}
+        />
       </Box>
     </Box>
   );

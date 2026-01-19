@@ -2,7 +2,12 @@ import { Box, Typography } from "@mui/material";
 import HStack from "../../../../components/stacks/Hstack";
 import { Aluno } from "../../../../types/Aluno";
 
-export default function AlunoCard({ aluno }: { aluno: Aluno }) {
+type AlunoCardProps = {
+  aluno: Aluno;
+  onSelected?: (aluno: Aluno) => void;
+};
+
+export default function AlunoCard({ aluno, onSelected }: AlunoCardProps) {
   const tipoContratoToColor: Record<Aluno["tipoContrato"], string> = {
     Mensal: "#e8f5e9",
     Trimestral: "#FFF3E0",
@@ -11,6 +16,7 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
 
   return (
     <Box
+      onClick={() => onSelected?.(aluno)}
       sx={{
         width: "100%",
         border: "1px solid #ccc",
@@ -24,36 +30,38 @@ export default function AlunoCard({ aluno }: { aluno: Aluno }) {
         },
       }}
     >
-      <Box>
-        <Typography color={"primary.main"} fontWeight={"bold"}>
-          {aluno.nome}
+      <Typography color="primary.main" fontWeight="bold">
+        {aluno.nome}
+      </Typography>
+
+      <HStack gap={2} alignItems="center">
+        <Typography color="text.secondary">
+          {aluno.cpf
+            ? aluno.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+            : "CPF não informado"}
         </Typography>
-        <HStack gap={2} alignItems="center" color={"text.secondary"}>
-          <Typography>{aluno.cpf ? aluno.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : "CPF não informado"}</Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              bgcolor: tipoContratoToColor[aluno.tipoContrato],
-              color: () => {
-                const colorMap = {
-                  Mensal: "#44a148", 
-                  Trimestral: "#EF6C02", 
-                  Anual: "#EC5E59",
-                };
-                return colorMap[aluno.tipoContrato] || "#424242";
-              },
-              fontWeight: "bold",
-              px: 1,
-              py: 0.5,
-              borderRadius: 4,
-              textAlign: "center",
-              minWidth: 70,
-            }}
-          >
-            {aluno.tipoContrato}
-          </Typography>
-        </HStack>
-      </Box>
+
+        <Typography
+          variant="body2"
+          sx={{
+            bgcolor: tipoContratoToColor[aluno.tipoContrato],
+            color:
+              aluno.tipoContrato === "Mensal"
+                ? "#44a148"
+                : aluno.tipoContrato === "Trimestral"
+                ? "#EF6C02"
+                : "#EC5E59",
+            fontWeight: "bold",
+            px: 1,
+            py: 0.5,
+            borderRadius: 4,
+            minWidth: 80,
+            textAlign: "center",
+          }}
+        >
+          {aluno.tipoContrato}
+        </Typography>
+      </HStack>
     </Box>
   );
 }

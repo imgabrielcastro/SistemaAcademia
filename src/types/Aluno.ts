@@ -5,7 +5,7 @@ export type Aluno = {
   nome: string;
   cpf?: string;
   tipoContrato: TipoContrato;
-  dataNascimento?: string;
+  dataNascimento?: Date;
   cidade?: string;
   bairro?: string;
   endereco?: string;
