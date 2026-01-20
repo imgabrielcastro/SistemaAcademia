@@ -1,11 +1,19 @@
 import { Box, TextField } from "@mui/material";
+import useDebounce from "../../../../hooks/useDebounce";
+import { useState } from "react";
 
 interface BarraPesquisaProps {
   searchAluno: string;
   onSearchChange: (searchAluno: string) => void;
 }
 
-export default function BarraPesquisa({ searchAluno, onSearchChange }: BarraPesquisaProps) {
+export default function BarraPesquisa({
+  searchAluno,
+  onSearchChange,
+}: BarraPesquisaProps) {
+  const [inputValue, setInputValue] = useState(searchAluno);
+  const debouncedSearch = useDebounce(onSearchChange, 200);
+
   return (
     <Box
       sx={{
@@ -22,9 +30,10 @@ export default function BarraPesquisa({ searchAluno, onSearchChange }: BarraPesq
         variant="outlined"
         size="small"
         fullWidth
-        value={searchAluno}
+        value={inputValue}
         onChange={(e) => {
-          onSearchChange(e.target.value);
+          setInputValue(e.target.value); 
+          debouncedSearch(e.target.value); 
         }}
       />
     </Box>

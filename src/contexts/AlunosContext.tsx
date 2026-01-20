@@ -27,7 +27,11 @@ export default function AlunosProvider({
 
   useEffect(() => {
     const alunosStorage = getAlunosNoStorage();
-    setAlunos([...defaultAlunos, ...alunosStorage]);
+    if (alunosStorage.length > 0) {
+      setAlunos(alunosStorage);
+    } else {
+      setAlunos([...defaultAlunos]);
+    }
   }, []);
 
   function adicionarAluno(aluno: Aluno) {
