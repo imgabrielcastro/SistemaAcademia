@@ -9,6 +9,7 @@ import { Aluno } from "../../types/Aluno";
 export default function Alunos() {
   const [open, setOpen] = useState(false);
   const [alunoSelecionado, setAlunoSelecionado] = useState<Aluno | null>(null);
+  const [qtdeAlunos, setQtdeAlunos] = useState(0);
 
   return (
     <Box
@@ -24,7 +25,7 @@ export default function Alunos() {
       <Box>
         <TituloDescricaoBotao
           titulo="Alunos"
-          descricao="2 alunos cadastrados"
+          descricao={`${qtdeAlunos} aluno${qtdeAlunos !== 1 ? 's' : ''} cadastrado${qtdeAlunos !== 1 ? 's' : ''}`}
           buttonText="Novo Aluno"
           onButtonClick={() => {
             setAlunoSelecionado(null);
@@ -44,6 +45,7 @@ export default function Alunos() {
             setAlunoSelecionado(aluno);
             setOpen(true);
           }}
+          onQtdeAlunosChange={(qtde) => setQtdeAlunos(qtde)}
         />
       </Box>
     </Box>

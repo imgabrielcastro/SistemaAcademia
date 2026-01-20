@@ -22,11 +22,11 @@ export default function DicasUso() {
       <VStack gap={2} mt={2}>
         <NumeroDica
           numero={1}
-          dica="Acesse a Agenda para visualizar as aulas do dia e gerenciar participantes"
+          dica="Acesse a Agenda para visualizar as aulas e gerenciar participantes"
         />
         <NumeroDica
           numero={2}
-          dica="Cadastre novos Alunos antes de adicioná-los às aulas"
+          dica="Cadastre novos Alunos antes de adicioná-los as aulas"
         />
         <NumeroDica
           numero={3}

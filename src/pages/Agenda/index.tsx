@@ -1,40 +1,34 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../../components/Header";
-import CardAgenda from "./components/CardAgenda";
+import ListaAgenda from "./components/ListaAgenda";
 import VStack from "../../components/stacks/Vstack";
-import HStack from "../../components/stacks/Hstack";
-
+import BotaoFiltroAgenda from "./components/BotaoFiltroAgenda";
+  
 export default function Agenda() {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
       <Header />
+      <VStack px={2} mt={1}>
+        <BotaoFiltroAgenda titulo="Agenda" descricao="Lista de aulas" buttonText="Nova Aula"/>
+      </VStack>
       <Box
-    sx={{
-      display: "grid",
-     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-      gap: 2,
-      maxWidth: { xs: "400px", sm: "100%" },
-      justifyContent: "center",
-      p: 2,
-    }}
-  >
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
-        <CardAgenda card={{ id: "1", titulo: "Aerobica", modalidade: "Aerobica", dataHoraInicio: "19/04/2025 19:00", situacao: "EM ANDAMENTO", qntParticipantes: 10, qntVagas: 20 }} />
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: 2,
+          maxWidth: { xs: "400px", sm: "100%" },
+          justifyContent: "center",
+          mt: 1,
+        }}
+      >
+        <ListaAgenda />
       </Box>
     </Box>
   );
