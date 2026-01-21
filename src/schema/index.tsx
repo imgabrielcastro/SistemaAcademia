@@ -27,24 +27,26 @@ export const cadastroAlunoSchema = yup.object({
 });
 
 export const cadastroAgendaSchema = yup.object({
-  descricao: yup.string().required("Descrição é obrigatória"),
+  titulo: yup.string().required("Título é obrigatório"),
   modalidade: yup.string().required("Modalidade é obrigatória"),
-  dataInicio: yup
+  dataHoraInicio: yup
     .date()
+    .min(new Date(), "Data de início não pode ser no passado")
     .required("Data de início é obrigatória")
     .transform((value, originalValue) => {
       return originalValue === "" ? undefined : value;
     }),
-  capacidade: yup
+  qntVagas: yup
     .number()
-    .required("Capacidade é obrigatória")
+    .required("Quantidade de vagas é obrigatória")
+    .min(1, "Deve haver pelo menos 1 vaga")
     .transform((value, originalValue) => {
       return originalValue === "" ? undefined : value;
     }),
 
   situacao: yup
-    .mixed<"ABERTA" | "EM ANDAMENTO" | "ENCERRADA">()
-    .oneOf(["ABERTA", "EM ANDAMENTO", "ENCERRADA"])
+    .mixed<"ABERTA" | "EM ANDAMENTO" | "FINALIZADA" | "CANCELADA">()
+    .oneOf(["ABERTA", "EM ANDAMENTO", "FINALIZADA", "CANCELADA"])
     .required("Situação é obrigatória")
     .transform((value, originalValue) => {
       return originalValue === "" ? undefined : value;

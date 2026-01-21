@@ -1,4 +1,39 @@
 import { Aula } from "../types/Aula";
+import { Aluno } from "../types/Aluno";
+
+// Alunos de exemplo
+const alunosExemplo: Aluno[] = [
+  {
+    id: '1',
+    nome: 'João Silva',
+    cpf: '123.456.789-00',
+    tipoContrato: 'Mensal',
+    dataNascimento: new Date('1990-05-15'),
+    cidade: 'São Paulo',
+    bairro: 'Centro',
+    endereco: 'Rua das Flores, 123'
+  },
+  {
+    id: '2',
+    nome: 'Maria Oliveira',
+    cpf: '987.654.321-00',
+    tipoContrato: 'Anual',
+    dataNascimento: new Date('1985-10-20'),
+    cidade: 'São Paulo',
+    bairro: 'Vila Mariana',
+    endereco: 'Av. Paulista, 1000'
+  },
+  {
+    id: '3',
+    nome: 'Carlos Santos',
+    cpf: '456.789.123-00',
+    tipoContrato: 'Trimestral',
+    dataNascimento: new Date('1992-07-30'),
+    cidade: 'São Paulo',
+    bairro: 'Pinheiros',
+    endereco: 'Rua dos Pinheiros, 500'
+  }
+];
 
 export const aulasMock: Aula[] = [
   {
@@ -9,6 +44,8 @@ export const aulasMock: Aula[] = [
     situacao: "ABERTA",
     qntParticipantes: 7,
     qntVagas: 20,
+    permiteAgendamentoPos: false,
+    alunos: [alunosExemplo[0], alunosExemplo[1]]
   },
   {
     id: "2",
@@ -18,6 +55,8 @@ export const aulasMock: Aula[] = [
     situacao: "FINALIZADA",
     qntParticipantes: 18,
     qntVagas: 18,
+    permiteAgendamentoPos: false,
+    alunos: [alunosExemplo[1], alunosExemplo[2]]
   },
   {
     id: "3",
@@ -27,6 +66,8 @@ export const aulasMock: Aula[] = [
     situacao: "ABERTA",
     qntParticipantes: 6,
     qntVagas: 12,
+    permiteAgendamentoPos: false,
+    alunos: [alunosExemplo[0], alunosExemplo[2]]
   },
   {
     id: "4",
@@ -36,6 +77,8 @@ export const aulasMock: Aula[] = [
     situacao: "EM ANDAMENTO",
     qntParticipantes: 10,
     qntVagas: 10,
+    permiteAgendamentoPos: true,
+    alunos: [alunosExemplo[0], alunosExemplo[1], alunosExemplo[2]]
   },
   {
     id: "5",
@@ -45,6 +88,8 @@ export const aulasMock: Aula[] = [
     situacao: "CANCELADA",
     qntParticipantes: 0,
     qntVagas: 16,
+    permiteAgendamentoPos: false,
+    alunos: []
   },
   {
     id: "6",
@@ -54,6 +99,8 @@ export const aulasMock: Aula[] = [
     situacao: "ABERTA",
     qntParticipantes: 14,
     qntVagas: 25,
+    permiteAgendamentoPos: true,
+    alunos: [alunosExemplo[1], alunosExemplo[2]]
   },
   {
     id: "7",
@@ -63,6 +110,8 @@ export const aulasMock: Aula[] = [
     situacao: "EM ANDAMENTO",
     qntParticipantes: 20,
     qntVagas: 20,
+    permiteAgendamentoPos: true,
+    alunos: [alunosExemplo[0], alunosExemplo[2]]
   },
   {
     id: "8",
@@ -72,41 +121,7 @@ export const aulasMock: Aula[] = [
     situacao: "ABERTA",
     qntParticipantes: 5,
     qntVagas: 15,
-  },
-  {
-    id: "9",
-    titulo: "Zumba",
-    modalidade: "Dança",
-    dataHoraInicio: "2026-02-12T20:30:00",
-    situacao: "FINALIZADA",
-    qntParticipantes: 18,
-    qntVagas: 18,
-  },
-  {
-    id: "10",
-    titulo: "Yoga Relaxante",
-    modalidade: "Yoga",
-    dataHoraInicio: "2026-02-16T07:00:00",
-    situacao: "ABERTA",
-    qntParticipantes: 9,
-    qntVagas: 20,
-  },
-  {
-    id: "11",
-    titulo: "Pilates Aparelhos",
-    modalidade: "Pilates",
-    dataHoraInicio: "2026-02-18T08:30:00",
-    situacao: "EM ANDAMENTO",
-    qntParticipantes: 6,
-    qntVagas: 6,
-  },
-  {
-    id: "12",
-    titulo: "Treino de Força",
-    modalidade: "Musculação",
-    dataHoraInicio: "2026-02-23T18:00:00",
-    situacao: "ABERTA",
-    qntParticipantes: 11,
-    qntVagas: 15,
-  },
+    permiteAgendamentoPos: false,
+    alunos: [alunosExemplo[1]]
+  }
 ];

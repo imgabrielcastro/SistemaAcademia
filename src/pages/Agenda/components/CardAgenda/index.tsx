@@ -1,19 +1,26 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Link } from "@mui/material";
-import type { CardAgenda } from "../../../../types/cardAgenda";
+import { Aula } from "../../../../types/Aula";
 import HStack from "../../../../components/stacks/Hstack";
 import { formatarDataHoraBR } from "../../../../utils/formatarData";
 
-export default function CardAgenda({ card }: { card: CardAgenda }) {
-  const situacaoColor = card.situacao === "ABERTA"
-    ? "#44a148"
-    : card.situacao === "EM ANDAMENTO"
-    ? "#EF6C02" 
-    : "#EC5E59";
+interface CardAgendaProps {
+  card: Aula;
+  onClick: () => void;
+}
+
+export default function CardAgenda({ card, onClick }: CardAgendaProps) {
+  const situacaoColor =
+    card.situacao === "ABERTA"
+      ? "#44a148"
+      : card.situacao === "EM ANDAMENTO"
+      ? "#EF6C02"
+      : "#EC5E59";
+
   return (
     <Card
+      onClick={onClick}
       sx={{
         border: 1,
         maxWidth: 320,
@@ -21,40 +28,30 @@ export default function CardAgenda({ card }: { card: CardAgenda }) {
         borderColor: "grey.300",
         boxShadow: 2,
         cursor: "pointer",
-        "&:hover": {
-          borderColor: "primary.main",
-        },
+        "&:hover": { borderColor: "primary.main" },
       }}
     >
-      <Link href={card.dataHoraInicio} underline="none">
-        <CardContent>
-          <HStack justifyContent={"space-between"}>
-            <Typography variant="h6" component="div" fontWeight={"bold"}>
-              {card.titulo}
-            </Typography>
-            <Typography variant="h6" component="div" fontWeight={"bold"}>
-              {card.qntParticipantes}/{card.qntVagas}
-            </Typography>
-          </HStack>
-          <Typography sx={{ color: "text.secondary", mb: 1.5 }}>
-            {card.modalidade}
+      <CardContent>
+        <HStack justifyContent="space-between">
+          <Typography fontWeight="bold">{card.titulo}</Typography>
+          <Typography fontWeight="bold">
+            {card.qntParticipantes}/{card.qntVagas}
           </Typography>
+        </HStack>
 
-          <HStack justifyContent={"space-between"} paddingTop={1}>
+        <Typography sx={{ color: "text.secondary", mb: 1 }}>
+          {card.modalidade}
+        </Typography>
 
-            <Typography variant="caption" sx={{ color: "text.secondary" }}>
-              {formatarDataHoraBR(card.dataHoraInicio)}
-            </Typography>
-            <Typography
-              variant="body2"
-              fontWeight={"bold"}
-              sx={{ color: situacaoColor }}
-            >
-              {card.situacao}
-            </Typography>
-          </HStack>
-        </CardContent>
-      </Link>
+        <HStack justifyContent="space-between">
+          <Typography variant="caption">
+            {formatarDataHoraBR(card.dataHoraInicio)}
+          </Typography>
+          <Typography fontWeight="bold" sx={{ color: situacaoColor }}>
+            {card.situacao}
+          </Typography>
+        </HStack>
+      </CardContent>
     </Card>
   );
 }

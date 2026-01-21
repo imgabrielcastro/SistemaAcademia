@@ -7,114 +7,95 @@ import {
   TextField,
   Stack,
   Autocomplete,
+  Switch,
+  FormControlLabel,
+  Box,
+  Typography,
 } from "@mui/material";
-import { cadastroAgendaSchema } from "../../../../schema";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { cadastroAgendaSchema } from "../../../../schema";
 import { Aula, situacaoAula } from "../../../../types/Aula";
-import { Controller } from "react-hook-form";
-import { data } from "react-router-dom";
+import { useEffect } from "react";
 import { useAulas } from "../../../../hooks/useAulas";
+import { useAlunos } from "../../../../hooks/useAlunos";
 
-type CadastroAlunoProps = {
+type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  aula?: Aula | null;
 };
 
-export default function CadastroAgenda({ open, setOpen }: CadastroAlunoProps) {
-  const { adicionarAula } = useAulas();
+export default function CadastroAgenda({ open, setOpen, aula }: Props) {
+  const { adicionarAula, atualizarAula } = useAulas();
+  const { alunos } = useAlunos();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, reset, control } = useForm<Aula>({
     resolver: yupResolver(cadastroAgendaSchema) as any,
+    defaultValues: {
+      titulo: "",
+      modalidade: "",
+      dataHoraInicio: "",
+      situacao: "ABERTA",
+      qntParticipantes: 0,
+      qntVagas: 0,
+      permiteAgendamentoPos: false,
+      alunos: [],
+    },
   });
 
-  const handleClose = () => {
-    reset();
-    setOpen(false);
-  };
+  useEffect(() => {
+    if (aula) {
+      reset(aula);
+    } else {
+    reset({
+      titulo: "",
+      modalidade: "",
+      dataHoraInicio: "",
+      situacao: "ABERTA",
+      qntParticipantes: 0,
+      qntVagas: 0,
+      permiteAgendamentoPos: false,
+      alunos: [],
+    });
+  }
+}, [aula, open, reset]);
 
-  const onSubmit = (data: any) => {
-  const novaAula: Aula = {
-    id: crypto.randomUUID(),
-    titulo: data.descricao, 
-    modalidade: data.modalidade,
-    dataHoraInicio: data.dataInicio, 
-    situacao: data.situacao,
-    qntParticipantes: 0, 
-    qntVagas: Number(data.capacidade) 
+
+  const onSubmit = (data: Aula) => {
+    const payload: Aula = {
+      ...data,
+      id: aula?.id ?? crypto.randomUUID(),
+    };
+
+    aula ? atualizarAula(payload.id, payload) : adicionarAula(payload);
+    setOpen(false);
+    reset();
   };
-  
-  adicionarAula(novaAula);
-  handleClose();
-};
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      maxWidth="sm"
-      fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 3,
-        },
-      }}
-    >
-      <DialogTitle
-        sx={{
-          pb: 1,
-          fontWeight: 600,
-        }}
-      >
-        Cadastrar Aula
-        <div style={{ fontSize: 14, fontWeight: 400, opacity: 0.7 }}>
-          Preencha os dados abaixo para cadastrar uma nova aula
-        </div>
-      </DialogTitle>
+    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+      <DialogTitle>{aula ? "Editar Aula" : "Cadastrar Aula"}</DialogTitle>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent dividers>
-          <Stack spacing={2.2}>
-            <TextField
-              label="Descrição"
-              fullWidth
-              {...register("descricao")}
-              error={!!errors.descricao}
-              helperText={errors.descricao?.message?.toString()}
-            />
+          <Stack spacing={2}>
+            <TextField label="Título" {...register("titulo")} />
+            <TextField label="Modalidade" {...register("modalidade")} />
 
-            <TextField
-              label="Modalidade"
-              fullWidth
-              {...register("modalidade")}
-              error={!!errors.modalidade}
-              helperText={errors.modalidade?.message?.toString()}
-            />
-
-            <Stack direction="row" spacing={2.2}>
+            <Stack direction="row" spacing={2}>
               <TextField
                 type="datetime-local"
-                label="Data de Início"
-                fullWidth
+                label="Data"
                 InputLabelProps={{ shrink: true }}
-                {...register("dataInicio")}
-                error={!!errors.dataInicio}
-                helperText={errors.dataInicio?.message?.toString()}
-              />
-
-              <TextField
-                label="Capacidade"
                 fullWidth
+                {...register("dataHoraInicio")}
+              />
+              <TextField
                 type="number"
-                {...register("capacidade")}
-                error={!!errors.capacidade}
-                helperText={errors.capacidade?.message?.toString()}
+                label="Vagas"
+                fullWidth
+                {...register("qntVagas")}
               />
             </Stack>
 
@@ -124,15 +105,48 @@ export default function CadastroAgenda({ open, setOpen }: CadastroAlunoProps) {
               render={({ field }) => (
                 <Autocomplete
                   options={situacaoAula}
-                  value={field.value || null}
-                  onChange={(_, value) => field.onChange(value)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Situação"
-                      error={!!errors.situacao}
-                      helperText={errors.situacao?.message?.toString()}
+                  value={field.value}
+                  onChange={(_, v) => field.onChange(v)}
+                  renderInput={(p) => <TextField {...p} label="Situação" />}
+                />
+              )}
+            />
+
+            <Controller
+              name="permiteAgendamentoPos"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
                     />
+                  }
+                  label="Permite agendamento após início?"
+                />
+              )}
+            />
+
+            <Controller
+              name="alunos"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete
+                  multiple
+                  options={alunos}
+                  value={field.value}
+                  onChange={(_, v) => field.onChange(v)}
+                  getOptionLabel={(o) => o.nome}
+                  isOptionEqualToValue={(o, v) => o.id === v.id}
+                  renderInput={(p) => <TextField {...p} label="Alunos" />}
+                  renderOption={(props, aluno) => (
+                    <li {...props}>
+                      <Box>
+                        <Typography>{aluno.nome}</Typography>
+                        <Typography fontSize="0.8rem">{aluno.cpf}</Typography>
+                      </Box>
+                    </li>
                   )}
                 />
               )}
@@ -140,22 +154,9 @@ export default function CadastroAgenda({ open, setOpen }: CadastroAlunoProps) {
           </Stack>
         </DialogContent>
 
-        <DialogActions
-          sx={{
-            px: 3,
-            py: 2,
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Stack direction="row" spacing={1.5}>
-            <Button onClick={handleClose} variant="text">
-              Cancelar
-            </Button>
-            <Button type="submit" variant="contained" size="large">
-              Salvar
-            </Button>
-          </Stack>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancelar</Button>
+          <Button type="submit" variant="contained">Salvar</Button>
         </DialogActions>
       </form>
     </Dialog>

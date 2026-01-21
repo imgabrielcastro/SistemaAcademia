@@ -1,3 +1,5 @@
+import { Aluno } from "./Aluno";
+
 export type SituacaoAula =
   | "ABERTA"
   | "EM ANDAMENTO"
@@ -12,6 +14,8 @@ export interface Aula {
   situacao: SituacaoAula;
   qntParticipantes: number;
   qntVagas: number;
+  permiteAgendamentoPos: boolean;
+  alunos: Aluno[];  
 }
 
 export const situacaoAula: SituacaoAula[] = [
