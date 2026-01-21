@@ -7,6 +7,11 @@ import HStack from "../../../../components/stacks/Hstack";
 import { formatarDataHoraBR } from "../../../../utils/formatarData";
 
 export default function CardAgenda({ card }: { card: CardAgenda }) {
+  const situacaoColor = card.situacao === "ABERTA"
+    ? "#44a148"
+    : card.situacao === "EM ANDAMENTO"
+    ? "#EF6C02" 
+    : "#EC5E59";
   return (
     <Card
       sx={{
@@ -43,9 +48,9 @@ export default function CardAgenda({ card }: { card: CardAgenda }) {
             <Typography
               variant="body2"
               fontWeight={"bold"}
-              sx={{ color: "text.secondary"}}
+              sx={{ color: situacaoColor }}
             >
-              {card.situacao === "EM_ANDAMENTO" ? "EM ANDAMENTO" : card.situacao}
+              {card.situacao}
             </Typography>
           </HStack>
         </CardContent>

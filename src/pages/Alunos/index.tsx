@@ -25,7 +25,7 @@ export default function Alunos() {
       <Box>
         <TituloDescricaoBotao
           titulo="Alunos"
-          descricao={`${qtdeAlunos} aluno${qtdeAlunos !== 1 ? 's' : ''} cadastrado${qtdeAlunos !== 1 ? 's' : ''}`}
+          descricao={`${qtdeAlunos} aluno${qtdeAlunos !== 1 ? "s" : ""} cadastrado${qtdeAlunos !== 1 ? "s" : ""}`}
           buttonText="Novo Aluno"
           onButtonClick={() => {
             setAlunoSelecionado(null);

@@ -4,13 +4,16 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import AlunosProvider from "./contexts/AlunosContext";
 import { theme } from './theme/';
 import App from './App';
+import AulasProvider from './contexts/AgendaContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AlunosProvider>
-        <App />
+        <AulasProvider>
+          <App />
+        </AulasProvider>
       </AlunosProvider>
     </ThemeProvider>
   </StrictMode>,

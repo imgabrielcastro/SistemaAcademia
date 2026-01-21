@@ -9,12 +9,11 @@ type TituloDescricaoBotaoProps = {
   descricao: string;
   buttonText: string;
   onButtonClick?: () => void;
-  isAgenda?: boolean;
 };
 
 
 
-export default function TituloDescricaoBotao({ titulo, descricao, buttonText, onButtonClick, isAgenda}: TituloDescricaoBotaoProps) {
+export default function TituloDescricaoBotao({ titulo, descricao, buttonText, onButtonClick}: TituloDescricaoBotaoProps) {
   return (
     <HStack
       justifyContent="space-between"

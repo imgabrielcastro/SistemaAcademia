@@ -25,3 +25,28 @@ export const cadastroAlunoSchema = yup.object({
   bairro: yup.string(),
   endereco: yup.string(),
 });
+
+export const cadastroAgendaSchema = yup.object({
+  descricao: yup.string().required("Descrição é obrigatória"),
+  modalidade: yup.string().required("Modalidade é obrigatória"),
+  dataInicio: yup
+    .date()
+    .required("Data de início é obrigatória")
+    .transform((value, originalValue) => {
+      return originalValue === "" ? undefined : value;
+    }),
+  capacidade: yup
+    .number()
+    .required("Capacidade é obrigatória")
+    .transform((value, originalValue) => {
+      return originalValue === "" ? undefined : value;
+    }),
+
+  situacao: yup
+    .mixed<"ABERTA" | "EM ANDAMENTO" | "ENCERRADA">()
+    .oneOf(["ABERTA", "EM ANDAMENTO", "ENCERRADA"])
+    .required("Situação é obrigatória")
+    .transform((value, originalValue) => {
+      return originalValue === "" ? undefined : value;
+    }),
+});

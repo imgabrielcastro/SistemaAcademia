@@ -14,6 +14,7 @@ type FiltroAgendaProps = {
   descricao: string;
   buttonText: string;
   onButtonClick?: () => void;
+  onDataFilter?: (date: Dayjs | null) => void;
 };
 
 export default function FiltroAgenda({
@@ -21,8 +22,15 @@ export default function FiltroAgenda({
   descricao,
   buttonText,
   onButtonClick,
+  onDataFilter,
 }: FiltroAgendaProps) {
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+
+  const handleApplyFilter = () => {
+    if (onDataFilter) {
+      onDataFilter(selectedDate || null);
+    }
+  };
   return (
     <HStack
       justifyContent="space-between"
@@ -65,11 +73,10 @@ export default function FiltroAgenda({
           width: { xs: "100%", sm: "auto" },
           fontWeight: "bold",
         }}
-        onClick={onButtonClick}
+        onClick={handleApplyFilter}
       >
         Aplicar Filtros
       </Button>
-
 
       <Button
         variant="contained"
