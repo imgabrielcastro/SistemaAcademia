@@ -24,13 +24,18 @@ type Props = {
   aula?: Aula | null;
 };
 
-//aqui também no processo de validação das regras oara o cadastro de alunos(principalmente na listagem de alunos) eu precisei de auxílio da IA de como operaria neste projeto
-
 export default function CadastroAgenda({ open, setOpen, aula }: Props) {
   const { adicionarAula, atualizarAula } = useAulas();
   const { alunos } = useAlunos();
 
-  const { register, handleSubmit, reset, control, watch } = useForm<Aula>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm<Aula>({
     resolver: yupResolver(cadastroAgendaSchema) as any,
     defaultValues: {
       titulo: "",
@@ -55,10 +60,7 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
 
   useEffect(() => {
     if (aula) {
-      reset({
-        ...aula,
-        alunos: aula.alunos ?? [],
-      });
+      reset({ ...aula, alunos: aula.alunos ?? [] });
     } else {
       reset({
         titulo: "",
@@ -79,7 +81,6 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
     };
 
     aula ? atualizarAula(payload.id, payload) : adicionarAula(payload);
-
     setOpen(false);
     reset();
   }
@@ -95,22 +96,28 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
               label="Título"
               disabled={aulaFinalizada}
               {...register("titulo")}
+              error={!!errors.titulo}
+              helperText={errors.titulo?.message}
             />
 
             <TextField
               label="Modalidade"
               disabled={aulaFinalizada}
               {...register("modalidade")}
+              error={!!errors.modalidade}
+              helperText={errors.modalidade?.message}
             />
 
             <Stack direction="row" spacing={2}>
               <TextField
                 type="datetime-local"
                 label="Data"
-                disabled={aulaFinalizada}
                 InputLabelProps={{ shrink: true }}
+                disabled={aulaFinalizada}
                 fullWidth
                 {...register("dataHoraInicio")}
+                error={!!errors.dataHoraInicio}
+                helperText={errors.dataHoraInicio?.message}
               />
 
               <TextField
@@ -119,6 +126,8 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
                 disabled={aulaFinalizada}
                 fullWidth
                 {...register("qntVagas")}
+                error={!!errors.qntVagas}
+                helperText={errors.qntVagas?.message}
               />
             </Stack>
 
@@ -132,7 +141,12 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
                   disabled={aulaFinalizada}
                   onChange={(_, v) => field.onChange(v)}
                   renderInput={(params) => (
-                    <TextField {...params} label="Situação" />
+                    <TextField
+                      {...params}
+                      label="Situação"
+                      error={!!errors.situacao}
+                      helperText={errors.situacao?.message}
+                    />
                   )}
                 />
               )}
@@ -171,7 +185,12 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
                   getOptionLabel={(o) => o.nome}
                   isOptionEqualToValue={(o, v) => o.id === v.id}
                   renderInput={(params) => (
-                    <TextField {...params} label="Alunos" />
+                    <TextField
+                      {...params}
+                      label="Alunos"
+                      error={!!errors.alunos}
+                      helperText={errors.alunos?.message}
+                    />
                   )}
                 />
               )}
