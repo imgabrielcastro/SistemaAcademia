@@ -9,15 +9,18 @@ type ListaAlunosProps = {
   onQtdeAlunosChange?: (qtde: number) => void;
 };
 
-export function ListaAlunos({ onSelectAluno, onQtdeAlunosChange }: ListaAlunosProps) {
+export function ListaAlunos({
+  onSelectAluno,
+  onQtdeAlunosChange,
+}: ListaAlunosProps) {
   const { alunos } = useAlunos();
   const [searchAluno, setSearchAluno] = useState("");
 
   const alunosFiltrados = searchAluno
     ? alunos.filter(
-      (aluno) =>
-          (aluno.nome.toLowerCase().includes(searchAluno.toLowerCase())) ||
-          (aluno.cpf && aluno.cpf.includes(searchAluno))
+        (aluno) =>
+          aluno.nome.toLowerCase().includes(searchAluno.toLowerCase()) ||
+          (aluno.cpf && aluno.cpf.includes(searchAluno)),
       )
     : alunos;
 
@@ -35,14 +38,8 @@ export function ListaAlunos({ onSelectAluno, onQtdeAlunosChange }: ListaAlunosPr
       />
 
       {alunosFiltrados.map((aluno) => (
-        <AlunoCard
-          key={aluno.id}
-          aluno={aluno}
-          onSelected={onSelectAluno}
-        />
+        <AlunoCard key={aluno.id} aluno={aluno} onSelected={onSelectAluno} />
       ))}
     </div>
   );
 }
-
-

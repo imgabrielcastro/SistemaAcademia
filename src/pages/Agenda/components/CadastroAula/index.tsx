@@ -24,6 +24,8 @@ type Props = {
   aula?: Aula | null;
 };
 
+//aqui também no processo de validação das regras oara o cadastro de alunos(principalmente na listagem de alunos) eu precisei de auxílio da IA de como operaria neste projeto
+
 export default function CadastroAgenda({ open, setOpen, aula }: Props) {
   const { adicionarAula, atualizarAula } = useAulas();
   const { alunos } = useAlunos();

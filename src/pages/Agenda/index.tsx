@@ -18,7 +18,7 @@ export default function Agenda() {
 
   const filteredAulas = filterDate
     ? aulas.filter((aula) =>
-        dayjs(aula.dataHoraInicio).isSame(filterDate, "day")
+        dayjs(aula.dataHoraInicio).isSame(filterDate, "day"),
       )
     : aulas;
 
@@ -33,7 +33,14 @@ export default function Agenda() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", p: 3 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
       <Header />
 
       <VStack px={0.5} mt={1}>
@@ -57,11 +64,7 @@ export default function Agenda() {
         <ListaAgenda aulas={filteredAulas} onAulaClick={handleAulaClick} />
       </Box>
 
-      <CadastroAgenda
-        open={open}
-        setOpen={setOpen}
-        aula={aulaSelecionada}
-      />
+      <CadastroAgenda open={open} setOpen={setOpen} aula={aulaSelecionada} />
     </Box>
   );
 }

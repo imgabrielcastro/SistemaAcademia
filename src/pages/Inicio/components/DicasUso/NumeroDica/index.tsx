@@ -14,8 +14,6 @@ export default function NumeroDica({ numero, dica }: NumeroDicaProps) {
           backgroundColor: "primary.main",
           color: "white",
           borderRadius: 2,
-          width: 32,
-          height: 32,
           minWidth: 32,
           minHeight: 32,
           display: "flex",

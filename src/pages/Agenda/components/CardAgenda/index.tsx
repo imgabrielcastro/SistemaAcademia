@@ -13,10 +13,12 @@ interface CardAgendaProps {
 export default function CardAgenda({ card, onClick }: CardAgendaProps) {
   const situacaoColor =
     card.situacao === "ABERTA"
-      ? "#44a148"
+      ? "#F2C94C"
       : card.situacao === "EM ANDAMENTO"
-        ? "#EF6C02"
-        : "#EC5E59";
+        ? "#1565c0"
+        : card.situacao === "FINALIZADA"
+          ? "#2E7D32"
+          : "#837676ff";
 
   return (
     <Card

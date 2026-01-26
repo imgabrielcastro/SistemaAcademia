@@ -49,8 +49,8 @@ export default function AlunoCard({ aluno, onSelected }: AlunoCardProps) {
               aluno.tipoContrato === "Mensal"
                 ? "#44a148"
                 : aluno.tipoContrato === "Trimestral"
-                ? "#EF6C02"
-                : "#EC5E59",
+                  ? "#EF6C02"
+                  : "#EC5E59",
             fontWeight: "bold",
             px: 1,
             py: 0.5,

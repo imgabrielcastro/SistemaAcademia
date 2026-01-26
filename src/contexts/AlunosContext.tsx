@@ -6,7 +6,7 @@ import {
   salvarAlunosNoStorage,
 } from "../storage/alunoStorage";
 
-//Aqui neste local, precisei um pouco de auxílio de uma IA para conseguir fazer o CRUD corretamente, pedindo sugestão da manipulação dos dados no localStorage e 
+//Aqui neste local, precisei um pouco de auxílio de uma IA para aprender a aplicar o localstorage no projeto corretamente, pedindo sugestão da manipulação dos dados no localStorage e
 //em passar as props corretamente para os componentes filhos.
 
 type AlunosContextData = {
@@ -45,7 +45,7 @@ export default function AlunosProvider({
   function atualizarAluno(id: string, dados: Partial<Aluno>) {
     setAlunos((prev) => {
       const atualizados = prev.map((aluno) =>
-        aluno.id === id ? { ...aluno, ...dados } : aluno
+        aluno.id === id ? { ...aluno, ...dados } : aluno,
       );
       salvarAlunosNoStorage(atualizados);
       return atualizados;

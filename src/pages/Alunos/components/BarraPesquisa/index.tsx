@@ -32,8 +32,8 @@ export default function BarraPesquisa({
         fullWidth
         value={inputValue}
         onChange={(e) => {
-          setInputValue(e.target.value); 
-          debouncedSearch(e.target.value); 
+          setInputValue(e.target.value);
+          debouncedSearch(e.target.value);
         }}
       />
     </Box>
