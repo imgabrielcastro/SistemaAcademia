@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PeopleIcon from "@mui/icons-material/People";
 import { Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import type { CardNavegacaoInicio } from "../../../../types/cardNavegacaoInicio";
 
 export default function NavegacaoCard({ card }: { card: CardNavegacaoInicio }) {
@@ -23,7 +24,7 @@ export default function NavegacaoCard({ card }: { card: CardNavegacaoInicio }) {
         },
       }}
     >
-      <Link href={card.link} underline="none">
+      <Link component={RouterLink} to={card.link} underline="none">
         <CardContent>
           {card.icon === "calendar" ? <CalendarTodayIcon /> : <PeopleIcon />}
           <Typography variant="h5" component="div" fontWeight={"bold"}>
