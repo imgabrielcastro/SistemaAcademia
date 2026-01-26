@@ -14,7 +14,6 @@ function App() {
           sx={{
             display: "flex",
             justifyContent: "center",
-            pt: 8,
             flexDirection: "column",
             alignItems: "center",
           }}

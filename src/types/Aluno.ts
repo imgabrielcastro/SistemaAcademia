@@ -5,11 +5,10 @@ export type Aluno = {
   nome: string;
   cpf?: string;
   tipoContrato: TipoContrato;
-  dataNascimento?: Date;
+  dataNascimento?: string;
   cidade?: string;
   bairro?: string;
   endereco?: string;
 };
 
 export const tiposContrato: TipoContrato[] = ["Mensal", "Trimestral", "Anual"];
-

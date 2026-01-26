@@ -6,9 +6,21 @@ export const cadastroAlunoSchema = yup.object({
   cpf: yup.string().required("CPF é obrigatório"),
 
   dataNascimento: yup
-    .date()
+    .string()
     .required("Data obrigatória")
-    .max(new Date(), "Data de nascimento não pode ser no futuro")
+    .matches(/^\d{4}-\d{2}-\d{2}$/, "Data inválida")
+    .test(
+      "not-future",
+      "Data de nascimento não pode ser no futuro",
+      (value) => {
+        if (!value) return true;
+        const date = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return false;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return date.getTime() <= today.getTime();
+      },
+    )
     .transform((value, originalValue) => {
       return originalValue === "" ? undefined : value;
     }),

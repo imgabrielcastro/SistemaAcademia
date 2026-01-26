@@ -17,6 +17,30 @@ import { useAlunos } from "../../../../hooks/useAlunos";
 import { tiposContrato, Aluno } from "../../../../types/Aluno";
 import { useEffect } from "react";
 
+function toYyyyMmDd(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function verificarData(value: string) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+function ajusteDataInput(value: unknown): string | undefined {
+  if (value == null || value === "") return undefined;
+
+  if (value instanceof Date) return toYyyyMmDd(value);
+
+  const raw = typeof value === "string" ? value : String(value);
+  if (verificarData(raw)) return raw;
+
+  const parsed = new Date(raw);
+  if (Number.isNaN(parsed.getTime())) return undefined;
+  return toYyyyMmDd(parsed);
+}
+
 type CadastroAlunoProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -45,7 +69,10 @@ export default function CadastroAluno({
 
   useEffect(() => {
     if (aluno) {
-      reset(aluno);
+      reset({
+        ...aluno,
+        dataNascimento: ajusteDataInput(aluno.dataNascimento),
+      });
     } else {
       reset();
     }
