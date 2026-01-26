@@ -8,7 +8,7 @@ interface NomeUsuarioProps {
 
 export default function NomeUsuario({ nomeUsuario }: NomeUsuarioProps) {
   return (
-    <Typography variant="h6">
+    <Typography variant="h5">
       Olá{" "}
       <Box component="span" sx={{ color: "primary.main", fontWeight: "bold" }}>
         {nomeUsuario.name}

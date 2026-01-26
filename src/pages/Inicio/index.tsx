@@ -64,8 +64,8 @@ function App() {
               />
             </Box>
             <DicasUso />
-            <VStack alignItems="center" mt={6} mb={4} gap={1}>
-              <Typography textAlign="center" variant="caption">
+            <VStack alignItems="center" mt={6} mb={0} gap={1}>
+              <Typography textAlign="center" variant="body2">
                 Feito com 💜 por José Gabriel
               </Typography>
             </VStack>

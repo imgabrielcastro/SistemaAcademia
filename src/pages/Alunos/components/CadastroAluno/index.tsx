@@ -193,6 +193,7 @@ export default function CadastroAluno({
             py: 2,
             display: "flex",
             justifyContent: "space-between",
+            flexDirection: { xs: "column", md: "row" },
           }}
         >
           {aluno ? (
@@ -210,7 +211,9 @@ export default function CadastroAluno({
             <span />
           )}
 
-          <Stack direction="row" spacing={1.5}>
+          <Stack
+            spacing={1.5}
+          >
             <Button onClick={handleClose} variant="text">
               Cancelar
             </Button>
