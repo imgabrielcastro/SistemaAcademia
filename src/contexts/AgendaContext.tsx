@@ -1,16 +1,16 @@
 import { createContext, useEffect, useState } from "react";
 import { Aula } from "../types/Aula";
-import { aulasMock } from "../data/HorariosMock";
 import {
   getAulasNoStorage,
   salvarAulasNoStorage,
 } from "../storage/agendaStorage";
+import { aulasMock } from "../data/HorariosMock";
 
-type AulasContextData = {
+interface AulasContextData {
   aulas: Aula[];
   adicionarAula: (aula: Aula) => void;
-  atualizarAula: (id: string, dados: Partial<Aula>) => void;
-};
+  atualizarAula: (id: string, aula: Aula) => void;
+}
 
 export const AulasContext = createContext<AulasContextData | null>(null);
 
@@ -23,35 +23,31 @@ export default function AulasProvider({
 
   useEffect(() => {
     const aulasStorage = getAulasNoStorage();
-    if (aulasStorage.length > 0) {
-      setAulas(aulasStorage);
+
+    if (aulasStorage.length === 0) {
+      setAulas(aulasMock);
+      salvarAulasNoStorage(aulasMock);
     } else {
-      setAulas([...aulasMock]);
+      setAulas(aulasStorage);
     }
   }, []);
 
+  useEffect(() => {
+    salvarAulasNoStorage(aulas);
+  }, [aulas]);
+
   function adicionarAula(aula: Aula) {
-    setAulas((prev) => {
-      const novos = [...prev, aula];
-      salvarAulasNoStorage(novos);
-      return novos;
-    });
+    setAulas((prev) => [...prev, aula]);
   }
 
-  function atualizarAula(id: string, dados: Partial<Aula>) {
-    setAulas((prev) => {
-      const atualizados = prev.map((aula) =>
-        aula.id === id ? { ...aula, ...dados } : aula
-      );
-      salvarAulasNoStorage(atualizados);
-      return atualizados;
-    });
+  function atualizarAula(id: string, aulaAtualizada: Aula) {
+    setAulas((prev) =>
+      prev.map((aula) => (aula.id === id ? aulaAtualizada : aula)),
+    );
   }
 
   return (
-    <AulasContext.Provider
-      value={{ aulas, adicionarAula, atualizarAula }}
-    >
+    <AulasContext.Provider value={{ aulas, adicionarAula, atualizarAula }}>
       {children}
     </AulasContext.Provider>
   );

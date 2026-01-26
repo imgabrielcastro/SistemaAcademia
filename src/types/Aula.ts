@@ -1,4 +1,4 @@
-import { Aluno } from "./Aluno";
+import type { Aluno } from "./Aluno";
 
 export type SituacaoAula =
   | "ABERTA"
@@ -12,10 +12,9 @@ export interface Aula {
   modalidade: string;
   dataHoraInicio: string;
   situacao: SituacaoAula;
-  qntParticipantes: number;
   qntVagas: number;
   permiteAgendamentoPos: boolean;
-  alunos: Aluno[];  
+  alunos: Aluno[];
 }
 
 export const situacaoAula: SituacaoAula[] = [

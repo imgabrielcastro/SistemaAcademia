@@ -36,7 +36,7 @@ export default function Agenda() {
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", p: 3 }}>
       <Header />
 
-      <VStack px={2} mt={1}>
+      <VStack px={0.5} mt={1}>
         <BotaoFiltroAgenda
           titulo="Agenda"
           descricao="Lista de aulas"

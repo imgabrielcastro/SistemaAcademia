@@ -15,8 +15,8 @@ export default function CardAgenda({ card, onClick }: CardAgendaProps) {
     card.situacao === "ABERTA"
       ? "#44a148"
       : card.situacao === "EM ANDAMENTO"
-      ? "#EF6C02"
-      : "#EC5E59";
+        ? "#EF6C02"
+        : "#EC5E59";
 
   return (
     <Card
@@ -35,7 +35,7 @@ export default function CardAgenda({ card, onClick }: CardAgendaProps) {
         <HStack justifyContent="space-between">
           <Typography fontWeight="bold">{card.titulo}</Typography>
           <Typography fontWeight="bold">
-            {card.qntParticipantes}/{card.qntVagas}
+            {card.alunos.length}/{card.qntVagas}
           </Typography>
         </HStack>
 

@@ -9,8 +9,6 @@ import {
   Autocomplete,
   Switch,
   FormControlLabel,
-  Box,
-  Typography,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,48 +28,59 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
   const { adicionarAula, atualizarAula } = useAulas();
   const { alunos } = useAlunos();
 
-  const { register, handleSubmit, reset, control } = useForm<Aula>({
+  const { register, handleSubmit, reset, control, watch } = useForm<Aula>({
     resolver: yupResolver(cadastroAgendaSchema) as any,
     defaultValues: {
       titulo: "",
       modalidade: "",
       dataHoraInicio: "",
       situacao: "ABERTA",
-      qntParticipantes: 0,
       qntVagas: 0,
       permiteAgendamentoPos: false,
       alunos: [],
     },
   });
 
+  const situacao = watch("situacao");
+  const permiteAgendamentoPos = watch("permiteAgendamentoPos");
+  const qntVagas = watch("qntVagas") || 0;
+
+  const podeAgendarPos =
+    situacao === "ABERTA" ||
+    (situacao === "EM ANDAMENTO" && permiteAgendamentoPos);
+
+  const aulaFinalizada = situacao === "FINALIZADA" || situacao === "CANCELADA";
+
   useEffect(() => {
     if (aula) {
-      reset(aula);
+      reset({
+        ...aula,
+        alunos: aula.alunos ?? [],
+      });
     } else {
-    reset({
-      titulo: "",
-      modalidade: "",
-      dataHoraInicio: "",
-      situacao: "ABERTA",
-      qntParticipantes: 0,
-      qntVagas: 0,
-      permiteAgendamentoPos: false,
-      alunos: [],
-    });
-  }
-}, [aula, open, reset]);
+      reset({
+        titulo: "",
+        modalidade: "",
+        dataHoraInicio: "",
+        situacao: "ABERTA",
+        qntVagas: 0,
+        permiteAgendamentoPos: false,
+        alunos: [],
+      });
+    }
+  }, [aula, open, reset]);
 
-
-  const onSubmit = (data: Aula) => {
+  function onSubmit(data: Aula) {
     const payload: Aula = {
       ...data,
       id: aula?.id ?? crypto.randomUUID(),
     };
 
     aula ? atualizarAula(payload.id, payload) : adicionarAula(payload);
+
     setOpen(false);
     reset();
-  };
+  }
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
@@ -80,20 +89,32 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent dividers>
           <Stack spacing={2}>
-            <TextField label="Título" {...register("titulo")} />
-            <TextField label="Modalidade" {...register("modalidade")} />
+            <TextField
+              label="Título"
+              disabled={aulaFinalizada}
+              {...register("titulo")}
+            />
+
+            <TextField
+              label="Modalidade"
+              disabled={aulaFinalizada}
+              {...register("modalidade")}
+            />
 
             <Stack direction="row" spacing={2}>
               <TextField
                 type="datetime-local"
                 label="Data"
+                disabled={aulaFinalizada}
                 InputLabelProps={{ shrink: true }}
                 fullWidth
                 {...register("dataHoraInicio")}
               />
+
               <TextField
                 type="number"
                 label="Vagas"
+                disabled={aulaFinalizada}
                 fullWidth
                 {...register("qntVagas")}
               />
@@ -106,8 +127,11 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
                 <Autocomplete
                   options={situacaoAula}
                   value={field.value}
+                  disabled={aulaFinalizada}
                   onChange={(_, v) => field.onChange(v)}
-                  renderInput={(p) => <TextField {...p} label="Situação" />}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Situação" />
+                  )}
                 />
               )}
             />
@@ -117,6 +141,7 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
               control={control}
               render={({ field }) => (
                 <FormControlLabel
+                  disabled={aulaFinalizada}
                   control={
                     <Switch
                       checked={field.value}
@@ -136,17 +161,15 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
                   multiple
                   options={alunos}
                   value={field.value}
-                  onChange={(_, v) => field.onChange(v)}
+                  disabled={!podeAgendarPos || aulaFinalizada}
+                  onChange={(_, v) => {
+                    if (qntVagas > 0 && v.length > qntVagas) return;
+                    field.onChange(v);
+                  }}
                   getOptionLabel={(o) => o.nome}
                   isOptionEqualToValue={(o, v) => o.id === v.id}
-                  renderInput={(p) => <TextField {...p} label="Alunos" />}
-                  renderOption={(props, aluno) => (
-                    <li {...props}>
-                      <Box>
-                        <Typography>{aluno.nome}</Typography>
-                        <Typography fontSize="0.8rem">{aluno.cpf}</Typography>
-                      </Box>
-                    </li>
+                  renderInput={(params) => (
+                    <TextField {...params} label="Alunos" />
                   )}
                 />
               )}
@@ -156,7 +179,9 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
 
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancelar</Button>
-          <Button type="submit" variant="contained">Salvar</Button>
+          <Button type="submit" variant="contained">
+            Salvar
+          </Button>
         </DialogActions>
       </form>
     </Dialog>
