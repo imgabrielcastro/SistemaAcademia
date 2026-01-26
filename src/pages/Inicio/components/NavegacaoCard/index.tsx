@@ -21,6 +21,7 @@ export default function NavegacaoCard({ card }: { card: CardNavegacaoInicio }) {
         cursor: "pointer",
         "&:hover": {
           borderColor: "primary.main",
+          transition: "all 0.3s ease-in-out",
         },
       }}
     >

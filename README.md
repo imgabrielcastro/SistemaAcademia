@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# Sistema Academia (Next Fit)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web desenvolvida como **desafio técnico** para a Next Fit, com foco em uma experiência simples e responsiva para **gestão de alunos** e **agenda de aulas**.
 
-Currently, two official plugins are available:
+## Principais funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Alunos**
+  - Cadastro e listagem
+  - Edição e remoção
+- **Agenda**
+  - Criação e listagem de aulas
+  - Filtro por data
+- **Persistência local** via `localStorage` (sem backend)
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + TypeScript
+- Vite
+- Material UI (MUI)
+- React Router
+- React Hook Form + Yup (validações)
+- Day.js (datas)
 
-## Expanding the ESLint configuration
+## Regras de negócio (resumo)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Aulas **finalizadas/encerradas** não podem ser alteradas
+- Não é possível exceder o **número máximo de alunos** de uma aula
+- Aulas sem a opção de **agendamento pós-início** não permitem adicionar alunos após o início
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Como rodar localmente
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Requisitos
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js (recomendado: versão LTS)
+- npm
+
+### Instalação e execução
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Depois acesse:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `http://localhost:5173`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Scripts
+
+```bash
+npm run dev      # ambiente de desenvolvimento
+npm run build    # build de produção
+npm run preview  # preview do build
+npm run lint     # lint do projeto
 ```
+
+## Deploy
+
+O projeto foi publicado no **Vercel**.
+
+## Próximos passos
+
+- Adicionar um backend
+- Adicionar uma tela de configurações de perfil
+- Adicionar mais opções de contratos e criação de contratos

@@ -27,6 +27,7 @@ export default function AlunoCard({ aluno, onSelected }: AlunoCardProps) {
         cursor: "pointer",
         "&:hover": {
           borderColor: "primary.main",
+          transition: "all 0.3s ease-in-out",
         },
       }}
     >

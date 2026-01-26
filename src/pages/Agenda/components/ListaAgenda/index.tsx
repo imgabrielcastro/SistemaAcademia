@@ -13,7 +13,7 @@ export default function ListaAgenda({ aulas, onAulaClick }: ListaAgendaProps) {
       <Typography
         variant="h6"
         fontWeight="bold"
-        sx={{ textAlign: "center", width: "100%" }}
+        sx={{ textAlign: "center", width: "100%", justifyContent: "center", alignItems: "center" }}
       >
         Nenhuma aula encontrada
       </Typography>

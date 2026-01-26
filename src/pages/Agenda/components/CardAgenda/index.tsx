@@ -31,6 +31,7 @@ export default function CardAgenda({ card, onClick }: CardAgendaProps) {
         boxShadow: 2,
         cursor: "pointer",
         "&:hover": { borderColor: "primary.main" },
+        transition: "all 0.3s ease-in-out",
       }}
     >
       <CardContent>
