@@ -15,7 +15,6 @@ export default function Alunos() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "100vh",
         p: 4,
       }}
     >
