@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import Header from "../../components/Header";
 import ListaAgenda from "./components/ListaAgenda";
 import VStack from "../../components/stacks/Vstack";
 import BotaoFiltroAgenda from "./components/BotaoFiltroAgenda";
@@ -41,8 +40,6 @@ export default function Agenda() {
         p: 3,
       }}
     >
-      <Header />
-
       <VStack px={0.5} mt={1}>
         <BotaoFiltroAgenda
           titulo="Agenda"

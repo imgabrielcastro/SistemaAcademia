@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import Header from "../../components/Header";
 import TituloDescricaoBotao from "../../components/TituloDescricaoBotao";
 import CadastroAluno from "./components/CadastroAluno";
 import { useState } from "react";
@@ -20,8 +19,6 @@ export default function Alunos() {
         p: 4,
       }}
     >
-      <Header />
-
       <Box>
         <TituloDescricaoBotao
           titulo="Alunos"

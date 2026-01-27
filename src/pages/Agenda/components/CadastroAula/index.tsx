@@ -18,6 +18,40 @@ import { useEffect } from "react";
 import { useAulas } from "../../../../hooks/useAulas";
 import { useAlunos } from "../../../../hooks/useAlunos";
 
+function transformarParaDataHoraLocal(value: unknown): string {
+  //estava com um bug no momento do cadastro, criei essa função com auxilio de IA para converter o código de UTC para local.
+  if (!value) return "";
+
+  if (value instanceof Date) {
+    const yyyy = value.getFullYear();
+    const mm = String(value.getMonth() + 1).padStart(2, "0");
+    const dd = String(value.getDate()).padStart(2, "0");
+    const hh = String(value.getHours()).padStart(2, "0");
+    const min = String(value.getMinutes()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+  }
+
+  if (typeof value === "string") {
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)) {
+      return value.slice(0, 16);
+    }
+
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) {
+      const yyyy = parsed.getFullYear();
+      const mm = String(parsed.getMonth() + 1).padStart(2, "0");
+      const dd = String(parsed.getDate()).padStart(2, "0");
+      const hh = String(parsed.getHours()).padStart(2, "0");
+      const min = String(parsed.getMinutes()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+    }
+
+    return "";
+  }
+
+  return "";
+}
+
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -60,7 +94,11 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
 
   useEffect(() => {
     if (aula) {
-      reset({ ...aula, alunos: aula.alunos ?? [] });
+      reset({
+        ...aula,
+        dataHoraInicio: transformarParaDataHoraLocal(aula.dataHoraInicio),
+        alunos: aula.alunos ?? [],
+      });
     } else {
       reset({
         titulo: "",
@@ -78,6 +116,7 @@ export default function CadastroAgenda({ open, setOpen, aula }: Props) {
     const payload: Aula = {
       ...data,
       id: aula?.id ?? crypto.randomUUID(),
+      dataHoraInicio: transformarParaDataHoraLocal(data.dataHoraInicio),
     };
 
     aula ? atualizarAula(payload.id, payload) : adicionarAula(payload);

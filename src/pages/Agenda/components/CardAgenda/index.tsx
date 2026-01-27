@@ -1,6 +1,7 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 import { Aula } from "../../../../types/Aula";
 import HStack from "../../../../components/stacks/Hstack";
 import { formatarDataHoraBR } from "../../../../utils/formatarData";
@@ -34,23 +35,36 @@ export default function CardAgenda({ card, onClick }: CardAgendaProps) {
         transition: "all 0.3s ease-in-out",
       }}
     >
-      <CardContent>
-        <HStack justifyContent="space-between">
-          <Typography fontWeight="bold">{card.titulo}</Typography>
-          <Typography fontWeight="bold">
-            {card.alunos.length}/{card.qntVagas}
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          minHeight: 140,
+          justifyContent: "space-between",
+          gap: 1,
+        }}
+      >
+        <Box>
+          <HStack justifyContent="space-between" alignItems="flex-start">
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              {card.titulo}
+            </Typography>
+            <Typography variant="body1" sx={{ ml: 1, flexShrink: 0 }}>
+              {card.alunos.length}/{card.qntVagas}
+            </Typography>
+          </HStack>
+
+          <Typography sx={{ color: "text.secondary", mt: 0.5 }}>
+            {card.modalidade}
           </Typography>
-        </HStack>
+        </Box>
 
-        <Typography sx={{ color: "text.secondary", mb: 1 }}>
-          {card.modalidade}
-        </Typography>
-
-        <HStack justifyContent="space-between">
-          <Typography variant="caption">
+        <HStack justifyContent="space-between" alignItems="center">
+          <Typography variant="body2">
             {formatarDataHoraBR(card.dataHoraInicio)}
           </Typography>
-          <Typography fontWeight="bold" sx={{ color: situacaoColor }}>
+          <Typography variant="body2" fontWeight="bold" sx={{ color: situacaoColor }}>
             {card.situacao}
           </Typography>
         </HStack>

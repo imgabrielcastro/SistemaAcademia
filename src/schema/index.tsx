@@ -42,9 +42,19 @@ export const cadastroAgendaSchema = yup.object({
   titulo: yup.string().required("Título é obrigatório"),
   modalidade: yup.string().required("Modalidade é obrigatória"),
   dataHoraInicio: yup
-    .date()
-    .min(new Date(), "Data de início não pode ser no passado")
+    .string()
     .required("Data de início é obrigatória")
+    .matches(
+      //validação na data local
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{3})?)?$/,
+      "Data inválida",
+    )
+    .test("not-past", "Data de início não pode ser no passado", (value) => {
+      if (!value) return true;
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return false;
+      return date.getTime() >= Date.now();
+    })
     .transform((value, originalValue) => {
       return originalValue === "" ? undefined : value;
     }),

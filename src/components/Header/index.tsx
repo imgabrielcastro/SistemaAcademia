@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <AppBar
       position="fixed"
-      sx={{ backgroundColor: "primary.main", opacity: 0.95, width: "100%", justifyContent: "center" }}
+      sx={{ backgroundColor: "primary.main", width: "100%", justifyContent: "center" }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Box>
@@ -23,7 +23,7 @@ export default function Header() {
             variant="text"
             size="large"
             color="secondary"
-            sx={{ color: "secondary.main", fontWeight: "bold" }}
+            sx={{ color: "secondary.main" }}
             startIcon={<DateRangeIcon />}
           >
             Agenda
@@ -34,7 +34,7 @@ export default function Header() {
             variant="text"
             size="large"
             color="secondary"
-            sx={{ color: "primary.secondary", fontWeight: "bold" }}
+            sx={{ color: "primary.secondary"}}
             startIcon={<PeopleIcon />}
           >
             Alunos
