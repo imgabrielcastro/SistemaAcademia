@@ -21,6 +21,7 @@ Aplicação web desenvolvida como **desafio técnico** para a Next Fit, com foco
 - React Hook Form + Yup (validações)
 - Day.js (datas)
 - Ideia de UI/UX baseada em um projeto gerado no Lovable.
+- Lib Virtuoso para listas performáticas.
 
 ## Regras de negócio (resumo)
 
@@ -64,3 +65,4 @@ O projeto foi publicado no **Vercel**.
 - Adicionar um backend
 - Adicionar uma tela de configurações de perfil
 - Adicionar mais opções de contratos e criação de contratos
+- Adicionar mais filtros para visualização das aulas
