@@ -58,6 +58,7 @@ export default function AlunoCard({ aluno, onSelected }: AlunoCardProps) {
             borderRadius: 4,
             minWidth: 80,
             textAlign: "center",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
           }}
         >
           {aluno.tipoContrato}

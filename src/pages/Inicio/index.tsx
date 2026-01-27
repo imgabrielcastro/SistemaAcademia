@@ -19,7 +19,7 @@ function App() {
           }}
         >
           <NomeUsuario nomeUsuario={{ name: "José Gabriel" }} />
-          <Typography variant="h3" textAlign="center">
+          <Typography variant="h2" textAlign="center">
             Bem-vindo ao{" "}
             <Box
               component="span"
@@ -65,7 +65,7 @@ function App() {
             </Box>
             <DicasUso />
             <VStack alignItems="center" mt={6} mb={0} gap={1}>
-              <Typography textAlign="center" variant="body2">
+              <Typography textAlign="center" variant="body1">
                 Feito com 💜 por José Gabriel
               </Typography>
             </VStack>

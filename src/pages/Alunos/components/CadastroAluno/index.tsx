@@ -16,6 +16,7 @@ import { PatternFormat } from "react-number-format";
 import { useAlunos } from "../../../../hooks/useAlunos";
 import { tiposContrato, Aluno } from "../../../../types/Aluno";
 import { useEffect } from "react";
+import HStack from "../../../../components/stacks/Hstack";
 
 function toYyyyMmDd(date: Date) {
   const year = date.getFullYear();
@@ -193,7 +194,7 @@ export default function CadastroAluno({
             py: 2,
             display: "flex",
             justifyContent: "space-between",
-            flexDirection: { xs: "column", md: "row" },
+            flexDirection: "row",
           }}
         >
           {aluno ? (
@@ -205,22 +206,20 @@ export default function CadastroAluno({
                 handleClose();
               }}
             >
-              Remover aluno
+              Remover
             </Button>
           ) : (
             <span />
           )}
 
-          <Stack
-            spacing={1.5}
-          >
+          <HStack sx={{ width: "100%", justifyContent: "space-between" }}>
             <Button onClick={handleClose} variant="text">
               Cancelar
             </Button>
             <Button type="submit" variant="contained" size="large">
               {aluno ? "Salvar alterações" : "Cadastrar aluno"}
             </Button>
-          </Stack>
+          </HStack>
         </DialogActions>
       </form>
     </Dialog>

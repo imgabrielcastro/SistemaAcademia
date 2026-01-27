@@ -16,7 +16,7 @@ export default function DicasUso() {
         boxShadow: 3,
       }}
     >
-      <Typography variant="h6" fontWeight="bold">
+      <Typography variant="h5" fontWeight="bold">
         Dicas Rápidas
       </Typography>
       <VStack gap={2} mt={2}>

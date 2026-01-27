@@ -25,7 +25,7 @@ export default function BarraPesquisa({
       }}
     >
       <TextField
-        sx={{ borderColor: "primary.main" }}
+        sx={{ borderColor: "primary.main", transition: "all 0.3s ease" }}
         label="Buscar por nome ou CPF..."
         variant="outlined"
         size="small"

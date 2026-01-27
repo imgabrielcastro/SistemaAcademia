@@ -40,10 +40,10 @@ export default function FiltroAgenda({
       gap={2}
     >
       <VStack flex={1} alignItems={{ xs: "center", sm: "flex-start" }}>
-        <Typography variant="h4" component="h2">
+        <Typography variant="h3" component="h2">
           {titulo}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="h6" color="text.secondary">
           {descricao}
         </Typography>
       </VStack>

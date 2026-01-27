@@ -3,6 +3,7 @@ import { useAlunos } from "../../../../hooks/useAlunos";
 import { useState, useEffect } from "react";
 import BarraPesquisa from "../BarraPesquisa";
 import { Aluno } from "../../../../types/Aluno";
+import { Virtuoso } from "react-virtuoso";
 
 type ListaAlunosProps = {
   onSelectAluno: (aluno: Aluno) => void;
@@ -25,9 +26,7 @@ export function ListaAlunos({
     : alunos;
 
   useEffect(() => {
-    if (onQtdeAlunosChange) {
-      onQtdeAlunosChange(alunosFiltrados.length);
-    }
+    onQtdeAlunosChange?.(alunosFiltrados.length);
   }, [alunosFiltrados, onQtdeAlunosChange]);
 
   return (
@@ -37,9 +36,21 @@ export function ListaAlunos({
         onSearchChange={setSearchAluno}
       />
 
-      {alunosFiltrados.map((aluno) => (
-        <AlunoCard key={aluno.id} aluno={aluno} onSelected={onSelectAluno} />
-      ))}
+      {alunosFiltrados.length === 0 && (
+        <div className="text-center text-gray-500 py-8">
+          Nenhum aluno encontrado
+        </div>
+      )}
+
+      {/*Virtuoso para exibir somente o que está na tela sendo renderizado pelo scroll.*/}
+      <Virtuoso
+        useWindowScroll
+        data={alunosFiltrados}
+        increaseViewportBy={{ bottom: 500, top: 10 }}
+        itemContent={(_, aluno) => (
+          <AlunoCard key={aluno.id} aluno={aluno} onSelected={onSelectAluno} />
+        )}
+      />
     </div>
   );
 }

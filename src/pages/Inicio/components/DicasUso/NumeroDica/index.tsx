@@ -20,11 +20,12 @@ export default function NumeroDica({ numero, dica }: NumeroDicaProps) {
           alignItems: "center",
           justifyContent: "center",
           fontWeight: "bold",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
         }}
       >
-        <Typography variant="body2">{numero}</Typography>
+        <Typography variant="body1">{numero}</Typography>
       </Box>
-      <Typography variant="body2">{dica}</Typography>
+      <Typography variant="body1">{dica}</Typography>
     </HStack>
   );
 }
