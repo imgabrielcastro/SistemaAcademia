@@ -20,6 +20,7 @@ Aplicação web desenvolvida como **desafio técnico** para a Next Fit, com foco
 - React Router
 - React Hook Form + Yup (validações)
 - Day.js (datas)
+- Ideia de UI/UX baseada em um projeto gerado no Lovable.
 
 ## Regras de negócio (resumo)
 
