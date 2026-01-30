@@ -35,7 +35,7 @@ export function ListaAlunos({
     setLoading(true);
     const timeoutId = window.setTimeout(() => setLoading(false), 400);
     return () => window.clearTimeout(timeoutId);
-  }, [alunosFiltrados, alunos]);
+  }, [alunos]);
 
   if (loading) {
     return (
