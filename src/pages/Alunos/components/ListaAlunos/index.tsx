@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import BarraPesquisa from "../BarraPesquisa";
 import { Aluno } from "../../../../types/Aluno";
 import { Virtuoso } from "react-virtuoso";
+import Skeleton from "@mui/material/Skeleton";
 
 type ListaAlunosProps = {
   onSelectAluno: (aluno: Aluno) => void;
@@ -16,6 +17,7 @@ export function ListaAlunos({
 }: ListaAlunosProps) {
   const { alunos } = useAlunos();
   const [searchAluno, setSearchAluno] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const alunosFiltrados = searchAluno
     ? alunos.filter(
@@ -28,6 +30,27 @@ export function ListaAlunos({
   useEffect(() => {
     onQtdeAlunosChange?.(alunosFiltrados.length);
   }, [alunosFiltrados, onQtdeAlunosChange]);
+
+  useEffect(() => {
+    setLoading(true);
+    const timeoutId = window.setTimeout(() => setLoading(false), 400);
+    return () => window.clearTimeout(timeoutId);
+  }, [alunosFiltrados, alunos]);
+
+  if (loading) {
+    return (
+      <>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton
+            key={index}
+            variant="rounded"
+            height={90}
+            sx={{ width: "100%", borderRadius: 2, marginBottom: 2 }}
+          />
+        ))}
+      </>
+    );
+  }
 
   return (
     <div>

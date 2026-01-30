@@ -22,6 +22,7 @@ Aplicação web desenvolvida como **desafio técnico** para a Next Fit, com foco
 - Day.js (datas)
 - Ideia de UI/UX baseada em um projeto gerado no Lovable.
 - Lib Virtuoso para listas performáticas.
+- Skeleton para simular o loading de um backend futuro, para melhor experiência do usuário.
 
 ## Regras de negócio (resumo)
 
